@@ -1,0 +1,34 @@
+;----------------------------------------------------------------------
+;   ECEN260 Lab 5B
+;----------------------------------------------------------------------
+            .cdecls C,LIST,"msp430g2553.h"  ; cdecls tells assembler to
+                                            ; allow the c header file
+
+            .text                           ; program start
+            .global RESET		    		; define entry point
+
+;----------------------------------------------------------------------
+;  Allocate Global Memory
+;----------------------------------------------------------------------
+			.bss	data1, 2
+;----------------------------------------------------------------------
+;   Main Code
+;----------------------------------------------------------------------
+RESET       mov.w   #0280h,SP
+            mov.w   #WDTPW+WDTHOLD,&WDTCTL  ; stop watchdog timer
+
+mainLoop	mov		#7, 0x0029
+			mov		#29h, R10
+			mov		#0,	0(R10)
+loop		inc		0(R10)
+			jmp		loop
+
+endProgram	jmp	endProgram
+
+;----------------------------------------------------------------------
+;   Interrupt Vectors
+;----------------------------------------------------------------------
+            .sect   ".reset"                ; MSP430 RESET Vector
+            .short  RESET
+
+            .end

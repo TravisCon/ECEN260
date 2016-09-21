@@ -1,0 +1,18 @@
+
+**** Build of configuration Debug for project ECEN260LabMide ****
+
+"c:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
+'Building file: ../main.asm'
+'Invoking: MSP430 Compiler'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmsp --abi=coffabi --include_path="c:/ti/ccsv6/ccs_base/msp430/include" --include_path="c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" --advice:power=all -g --define=__MSP430G2553__ --diag_warning=225 --display_error_number --diag_wrap=off --printf_support=minimal --preproc_with_compile --preproc_dependency="main.pp"  "../main.asm"
+'Finished building: ../main.asm'
+' '
+'Building target: ECEN260LabMide.out'
+'Invoking: MSP430 Linker'
+"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmsp --abi=coffabi --advice:power=all -g --define=__MSP430G2553__ --diag_warning=225 --display_error_number --diag_wrap=off --printf_support=minimal -z -m"ECEN260LabMide.map" --heap_size=0 --stack_size=0 -i"c:/ti/ccsv6/ccs_base/msp430/include" -i"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/lib" -i"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="ECEN260LabMide_linkInfo.xml" -o "ECEN260LabMide.out"  "./main.obj" "../lnk_msp430g2553.cmd" -l"libc.a" 
+<Linking>
+warning #10202-D: no suitable entry-point found; setting to 0
+'Finished building target: ECEN260LabMide.out'
+' '
+
+**** Build Finished ****

@@ -1,0 +1,71 @@
+;----------------------------------------------------------------------
+;   ECEN260 Midterm Part 3
+;----------------------------------------------------------------------
+            .cdecls C,LIST,"msp430g2553.h"  ; cdecls tells assembler to
+                                            ; allow the c header file
+
+            .text                           ; program start
+            .global RESET		    		; define entry point
+
+;----------------------------------------------------------------------
+;  Allocate Global Memory
+;----------------------------------------------------------------------
+			.bss	data1, 2
+			.bss	data2, 2
+			.bss	quotient, 2
+			.bss	remainder, 2
+;----------------------------------------------------------------------
+;   Main Code
+;----------------------------------------------------------------------
+RESET       mov.w   #0280h,SP
+            mov.w   #WDTPW+WDTHOLD,&WDTCTL  ; stop watchdog timer
+
+mainLoop	mov		#0xFC18, &data1
+			mov.b	#0x0B, &data2
+			mov		&data1, R6
+			mov.b	&data2, R7
+			clr		R9
+
+			call 	#division
+
+			mov		R8, &quotient
+			mov		R9, &remainder
+
+endProgram	jmp		endProgram
+
+division 	clr 	R8			;Count subtractions made
+			clr 	R10 		;Counts negative operands
+			cmp		#0x0000, R6 ;
+			jl		invert1		;
+res1		cmp.b 	#0x00, R7	;
+			jl		invert2		;
+
+repeat		sub		R7, R6		;Subtract contents from R6
+			inc		R8			;
+			cmp		R7, R6
+			jge		repeat		;
+			mov		R6, R9		;
+			tst		R10			;
+			jnz		invert3		;
+res2		ret
+
+invert1		dec		R10			;
+			inv		R6			;
+			inc		R6			;
+			jmp		res1		;
+
+invert2		inc 	R10			;
+			inv.b	R7			;
+			inc.b	R7			;
+			jmp		repeat		;
+
+invert3		inv 	R8			;
+			inc		R8			;
+			jmp		res2		;
+;----------------------------------------------------------------------
+;   Interrupt Vectors
+;----------------------------------------------------------------------
+            .sect   ".reset"                ; MSP430 RESET Vector
+            .short  RESET
+
+            .end
